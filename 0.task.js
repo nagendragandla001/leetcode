@@ -1,29 +1,32 @@
-/**
- * step1: create an empty output array.
- * create start and end indexes
- */
-function squereSortedArray(nums) {
-  const output = new Array(nums.length);
-  let start = 0;
-  let end = nums.length - 1;
-  let index = nums.length - 1;
+function findLongestSubArraySumWithInK(nums, k) {
+  let left = (curr = ans = 0);
 
-  while (start <= end) {
-    if (Math.abs(nums[start]) < Math.abs(nums[end])) {
-      output[index] = nums[end] * nums[end];
-      end--;
-    } else {
-      output[index] = nums[start] * nums[start];
-      start++;
+  for (let right = 0; right < nums.length; right++) {
+    curr += nums[right];
+
+    while (curr > k) {
+      curr -= nums[left];
+      left++;
     }
-    index--;
+
+    ans = Math.max(ans, right - left + 1);
   }
 
-  return output;
+  return ans;
 }
 
-const input = [-10, -4, -1, 0, 2, 3, 7];
-// output = [0, 1, 4, 9, 16, 49, 100]
+const input = [3, 2, 1, 3, 1, 1];
+const k = 5;
 
-const result = squereSortedArray(input);
+const result = findLongestSubArraySumWithInK(input, k);
 console.log(result);
+
+/**
+ * Description:
+ * Let's go ahead with Sliding window.
+ * input  = [3,2,1,3,1,1]
+ * k = 5
+ *
+ *
+ *
+ */
